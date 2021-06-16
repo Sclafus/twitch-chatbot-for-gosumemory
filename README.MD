@@ -1,7 +1,7 @@
 # Installation
 - TODO install python and requirements
 - TODO mini tutorial on how to create a twitch app
-- Get your TMI TOKEN and CLIENT ID from [Twitch Developers Dashboard][https://dev.twitch.tv/]
+- Get your TMI TOKEN and CLIENT ID from [Twitch Developers Dashboard](https://dev.twitch.tv/)
 - Create a .env file with the following content
 
 ```bash
