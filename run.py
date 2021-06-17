@@ -12,7 +12,8 @@ BOT_NICK = os.environ.get('BOT_NICK')
 BOT_PREFIX = os.environ.get('BOT_PREFIX')
 CHANNEL = os.environ.get('CHANNEL')
 GOSUMEMORY_JSON = os.environ.get('GOSUMEMORY_JSON_URL')
-
+print(BOT_NICK)
+print(CHANNEL)
 
 def get_map() -> dict:
     '''Gets data from gosumemory, returns current beatmap information'''
@@ -22,7 +23,7 @@ def get_map() -> dict:
         if 'error' not in api_data:
             # download link
             beatmap_id = api_data['menu']['bm']['id']
-            beatmap_url = "https://osu.ppy.sh/b/" + beatmap_id
+            beatmap_url = f"https://osu.ppy.sh/b/{beatmap_id}"
 
             # beatmap metadata
             beatmap_metadata = api_data['menu']['bm']['metadata']
