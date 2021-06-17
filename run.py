@@ -12,8 +12,6 @@ BOT_NICK = os.environ.get('BOT_NICK')
 BOT_PREFIX = os.environ.get('BOT_PREFIX')
 CHANNEL = os.environ.get('CHANNEL')
 GOSUMEMORY_JSON = os.environ.get('GOSUMEMORY_JSON_URL')
-print(BOT_NICK)
-print(CHANNEL)
 
 def get_map() -> dict:
     '''Gets data from gosumemory, returns current beatmap information'''
@@ -70,7 +68,7 @@ async def event_message(ctx):
 async def now_playing(ctx):
     metadata = get_map()
     if metadata:
-        await ctx.send(f"{metadata['artist']} - {metadata['title']} [{metadata['diff']}] by {metadata['mapper']} {metadata['url']}")
+        await ctx.send(f"/me {metadata['artist']} - {metadata['title']} [{metadata['diff']}] by {metadata['mapper']} {metadata['url']}")
     else:
         await ctx.send("Sorry bud, can't help you with that")
 
