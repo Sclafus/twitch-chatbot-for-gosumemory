@@ -25,7 +25,6 @@ env = {
     "CHANNEL": os.environ.get('CHANNEL'),
     "GOSUMEMORY_JSON": os.environ.get('GOSUMEMORY_JSON_URL')
 }
-
 # checking env
 if [True for match in env.values() if match in ['', None]]:
     print(f"{RED}Your .env is not valid or missing.")
