@@ -17,58 +17,61 @@ GOSUMEMORY_JSON = os.environ.get('GOSUMEMORY_JSON_URL')
 
 # Colors
 colorama.init(autoreset=True)
-RED = "\033[1;31;40m"
-GREEN = "\033[1;32;40m"
-CYAN = "\033[1;34;40m"
+RED = "\033[91m"
+GREEN = "\033[92m"
+CYAN = "\033[96m"
+NOCOLOR = "\033[0m"
+LIGHT_PURPLE = "\033[95m"
+
+
+def get_data() -> dict:
+    try:
+        # get data from gosumemory
+        api_data = requests.get(GOSUMEMORY_JSON).json()
+        return api_data if 'error' not in api_data else None
+
+    except requests.exceptions.ConnectionError:
+        # error handling, can't connect to gosumemory
+        print(f"{RED}Could not connect to gosumemory socket!")
+        return None
+
 
 def get_map() -> dict:
-    '''Gets data from gosumemory, returns current beatmap information'''
-    try:
-        # get data from gosumemory
-        api_data = requests.get(GOSUMEMORY_JSON).json()
-        if 'error' not in api_data:
-            # download link
-            beatmap_id = api_data['menu']['bm']['id']
-            beatmap_url = f"https://osu.ppy.sh/b/{beatmap_id}"
+    '''Gets data from gosumemory, returns current beatmap informations'''
 
-            # beatmap metadata
-            beatmap_metadata = api_data['menu']['bm']['metadata']
+    api_data = get_data()
+    if api_data:
+        # download link
+        beatmap_id = api_data['menu']['bm']['id']
+        beatmap_url = f"https://osu.ppy.sh/b/{beatmap_id}"
 
-            return {
-                "url": beatmap_url,
-                "title": beatmap_metadata['title'],
-                "artist": beatmap_metadata['artist'],
-                "diff": beatmap_metadata['difficulty'],
-                "mapper": beatmap_metadata['mapper']
-            }
+        beatmap_metadata = api_data['menu']['bm']['metadata']
+        return {
+            "url": beatmap_url,
+            "title": beatmap_metadata['title'],
+            "artist": beatmap_metadata['artist'],
+            "diff": beatmap_metadata['difficulty'],
+            "mapper": beatmap_metadata['mapper']
+        }
 
-        print(f"{RED}osu is not running!")
-        return None
+    print(f"{RED}osu is not running!")
+    return None
 
-    except requests.exceptions.ConnectionError:
-        # error handling, can't connect to gosumemory
-        print(f"{RED}Could not connect to gosumemory socket!")
-        return None
 
 def get_skin() -> dict:
-    '''Gets data from gosumemory, returns current skin title'''
-    try:
-        # get data from gosumemory
-        api_data = requests.get(GOSUMEMORY_JSON).json()
-        if 'error' not in api_data:
-            # skin
-            skin_name = api_data['settings']['folders']['skin']
+    '''Gets data from gosumemory, returns skin informations'''
 
-            return {
-                "skin": skin_name
-            }
-        print(f"{RED}osu is not running!")
-        return None
+    api_data = get_data()
+    if api_data:
 
-    except requests.exceptions.ConnectionError:
-        # error handling, can't connect to gosumemory
-        print(f"{RED}Could not connect to gosumemory socket!")
-        return None
+        skin_name = api_data['settings']['folders']['skin']
+        return {
+            "skin": skin_name,
+            "url": None
+        }
+
+    print(f"{RED}osu is not running!")
+    return None
 
 
 bot = commands.Bot(
@@ -83,26 +86,28 @@ bot = commands.Bot(
 @bot.event
 async def event_ready():
     """ Runs once the bot has established a connection with Twitch """
-    print(f"{GREEN}{BOT_NICK.upper()} is online!")
+    print(f"{CYAN}{BOT_NICK} is online!")
 
 
 @bot.event
 async def event_message(ctx):
-    chat_msg = f"{ctx.author.name.upper()}: {ctx.content}"
+
     if ctx.author.name.lower() == BOT_NICK.lower():
-        print(f"{GREEN}{chat_msg}")
-    else: 
-        print(f"{chat_msg}")
+        chat_msg = f"{LIGHT_PURPLE}{ctx.author.name}: {GREEN}{ctx.content}"
+    else:
+        chat_msg = f"{LIGHT_PURPLE}{ctx.author.name}: {NOCOLOR}{ctx.content}"
+    print(chat_msg)
     await bot.handle_commands(ctx)
 
 
-@bot.command(name='np', aliases=['nowplaying','song'])
+@bot.command(name='np', aliases=['nowplaying', 'song'])
 async def now_playing(ctx):
     metadata = get_map()
     if metadata:
         await ctx.send(f"/me {metadata['artist']} - {metadata['title']} [{metadata['diff']}] by {metadata['mapper']} {metadata['url']}")
     else:
         await ctx.send("/me Sorry bud, can't help you with that")
+
 
 @bot.command(name='skin')
 async def skin(ctx):
@@ -112,6 +117,7 @@ async def skin(ctx):
         await ctx.send(f"/me Right now {CHANNEL} is using {skin_s}")
     else:
         await ctx.send("/me Sorry bud, can't help you with that")
+
 
 @bot.command(name='owo')
 async def owo(ctx):
