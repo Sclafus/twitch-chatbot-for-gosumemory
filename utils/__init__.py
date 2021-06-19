@@ -15,7 +15,7 @@ class Colors:
 colors = Colors()
 
 # loading env
-load_dotenv(os.path.join(os.path.dirname(os.path.realpath(__file__)), '.env'))
+load_dotenv(os.path.join(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir), '.env'))
 env = {
     "TMI_TOKEN": os.environ.get('TMI_TOKEN'),
     "CLIENT_ID": os.environ.get('CLIENT_ID'),
