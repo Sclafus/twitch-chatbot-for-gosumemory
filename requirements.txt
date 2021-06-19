@@ -1,3 +1,4 @@
 requests>=2.25.1
 twitchio>=1.2.3
 python-dotenv>=0.15.0
+colorama>=0.4.3
