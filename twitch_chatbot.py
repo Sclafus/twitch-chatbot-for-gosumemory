@@ -1,9 +1,9 @@
 from twitchio.ext import commands
-from utils import env, colors, get_data
+from utils import twitch_chatbot_env, colors, get_data
 
 
 # checking env
-if [True for match in env.values() if match in ['', None]]:
+if [True for match in twitch_chatbot_env.values() if match in ['', None]]:
     print(f"{colors.RED}Your .env is not valid or missing.")
     exit()
 
@@ -47,24 +47,24 @@ def get_skin() -> dict:
 
 
 bot = commands.Bot(
-    irc_token=env['TMI_TOKEN'],
-    client_id=env['CLIENT_ID'],
-    nick=env['BOT_NICK'],
-    prefix=env['BOT_PREFIX'],
-    initial_channels=[env['CHANNEL']]
+    irc_token = twitch_chatbot_env['TMI_TOKEN'],
+    client_id = twitch_chatbot_env['CLIENT_ID'],
+    nick = twitch_chatbot_env['BOT_NICK'],
+    prefix = twitch_chatbot_env['BOT_PREFIX'],
+    initial_channels = [twitch_chatbot_env['CHANNEL']]
 )
 
 
 @bot.event
 async def event_ready():
     """ Runs once the bot has established a connection with Twitch """
-    print(f"{colors.CYAN}{env['BOT_NICK']} is online!")
+    print(f"{colors.CYAN}{twitch_chatbot_env['BOT_NICK']} is online!")
 
 
 @bot.event
 async def event_message(ctx):
 
-    if ctx.author.name.lower() == env['BOT_NICK'].lower():
+    if ctx.author.name.lower() == twitch_chatbot_env['BOT_NICK'].lower():
         chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.GREEN}{ctx.content}"
     else:
         chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.NOCOLOR}{ctx.content}"
@@ -87,7 +87,7 @@ async def skin(ctx):
     if skin:
         # removing leading and trailing whitespaces
         skin_stripped = " ".join(skin['skin'].split())
-        await ctx.send(f"/me Right now {env['CHANNEL']} is using {skin_stripped}")
+        await ctx.send(f"/me Right now {twitch_chatbot_env['CHANNEL']} is using {skin_stripped}")
     else:
         await ctx.send("/me Sorry bud, can't help you with that")
 
