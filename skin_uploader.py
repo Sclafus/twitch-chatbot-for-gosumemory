@@ -20,8 +20,7 @@ api_data = get_data()
 if api_data:
    skin_name = api_data['settings']['folders']['skin']
    osu_path = api_data['settings']['folders']['game']
-   skin_folder_path = f"{osu_path}\Skins\{skin_name}"
-
+   skin_folder_path = os.path.join(osu_path, os.path.join('Skins', skin_name))
 
 mega_file = m.find(f"{skin_name}.osk")
 mega_folder = m.find('Osu! Skins')
