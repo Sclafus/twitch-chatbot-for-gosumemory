@@ -1,7 +1,6 @@
 from twitchio.ext import commands
 from utils import twitch_chatbot_env, colors, get_data
-from skin_uploader import upload_skin
-
+from skin_uploader import get_skin_url
 
 # checking env
 if [True for match in twitch_chatbot_env.values() if match in ['', None]]:
@@ -38,7 +37,7 @@ def get_skin() -> dict:
     if api_data:
 
         skin_name = api_data['settings']['folders']['skin']
-        skin_url = upload_skin()
+        skin_url = get_skin_url()
 
         return {
             "skin": skin_name,
@@ -100,6 +99,7 @@ async def skin(ctx):
 @bot.command(name='owo')
 async def owo(ctx):
     await ctx.send(f"/me OωO @{ctx.author.name}")
+
 
 if __name__ == '__main__':
     bot.run()

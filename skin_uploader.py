@@ -5,7 +5,7 @@ from zipfile import ZipFile
 from utils import mega_env, colors, get_data
 
 
-def upload_skin() -> str:
+def get_skin_url() -> str:
     # checking env
     if [True for match in mega_env.values() if match in ['', None]]:
         print(f"{colors.RED}Your .env is not valid or missing.")
@@ -42,8 +42,7 @@ def upload_skin() -> str:
         os.remove(f"{skin_name}.osk")
 
         return public_link
-    else: 
-        print(f"{colors.YELLOW}The skin is already on mega!")
-        public_link = m.get_link(mega_file)
 
-        return public_link
+    print(f"{colors.YELLOW}The skin is already on mega!")
+    public_link = m.get_link(mega_file)
+    return public_link
