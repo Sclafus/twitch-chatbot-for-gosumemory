@@ -27,7 +27,8 @@ twitch_chatbot_env = {
 }
 mega_env = {
     "MEGA_EMAIL": os.environ.get('MEGA_EMAIL'),
-    "MEGA_PASSWORD": os.environ.get('MEGA_PASSWORD')
+    "MEGA_PASSWORD": os.environ.get('MEGA_PASSWORD'),
+    "MEGA_OSUSKIN_FOLDER": os.environ.get('MEGA_OSUSKIN_FOLDER')
 }
 
 def get_data() -> dict:
