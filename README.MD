@@ -1,5 +1,12 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory/badge)](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory)
 
+
+# Features
+`!np` responds in chat with the currently playing map and a URL for the download link
+
+`!skin` responds in chat with the skin currently in use with a URL to download it. The URL is handled automatically. New skins are automatically uploaded to [mega.nz](https://mega.nz)
+
+`!owo` oωo
 # Installation
 
 ## Step 1: clone the repository, install python and dependencies 
@@ -29,12 +36,19 @@ to install the required libraries
 - Create a .env file with the following content:
 
 ```bash
-TMI_TOKEN = ####################    #starts with "oauth:"
+
+# Twitch config
+TMI_TOKEN = ####################                  # starts with "oauth:"
 CLIENT_ID = ##################
 BOT_NICK = your_chatbot_username
 BOT_PREFIX = !
 CHANNEL = your_channel_username
-GOSUMEMORY_JSON_URL = http://127.0.0.1:24050/json #probably this
+GOSUMEMORY_JSON_URL = http://127.0.0.1:24050/json # probably this
+
+# Mega config
+MEGA_EMAIL = example@email.com
+MEGA_PASSWORD = yourpassword                      # since it's not very secure, you should use a throwaway account
+MEGA_FOLDER = folder/subfolder
 ```
 
 ## Step 4: play more
@@ -48,3 +62,7 @@ Feel free to open an Issue for new features, unexpected behaviors or anything el
 
 
 If you don't want to open an Issue, you can [DM me on Discord](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
+
+# Todos
+- Use an API to short the [mega.nz](https://mega.nz/) URLs
+- Handle MEGA_FOLDER as root folder
