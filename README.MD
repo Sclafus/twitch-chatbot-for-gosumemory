@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory/badge)](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory)
+
 # Installation
 
 ## Step 1: clone the repository, install python and dependencies 
