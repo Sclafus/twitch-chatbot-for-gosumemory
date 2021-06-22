@@ -17,7 +17,6 @@ def zip_skin(skin_name: str, skin_folder_path: str):
             for root, dirs, files in os.walk(f"{skin_folder_path}"):
                 for file in files:
                     zf.write(os.path.join(root, file))
-    return
 
 
 def get_skin_url() -> str:
