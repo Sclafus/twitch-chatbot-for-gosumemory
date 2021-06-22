@@ -3,26 +3,28 @@ import json
 
 from mega import Mega
 from utils import data, colors
+from requests import get
+from zipfile import ZipFile
+
 
 def tinyurl_shortener(full_url: str) -> str:
     '''Returns a shortened url for the provided url'''
-    from requests import get
     api = 'https://tinyurl.com/api-create.php'
-    params = { 'url': full_url }
+    params = {'url': full_url}
     return get(api, params).text
 
+
 def zip_skin(skin_name: str, skin_folder_path: str):
-    from zipfile import ZipFile
     with ZipFile(f'{skin_name}.osk', 'w') as zf:
-            for root, dirs, files in os.walk(f"{skin_folder_path}"):
-                for file in files:
-                    zf.write(os.path.join(root, file))
+        for root, _, files in os.walk(f'{skin_folder_path}'):
+            for file in files:
+                zf.write(os.path.join(root, file))
 
 
 def get_skin_url() -> str:
     '''
         Returns the current skin url from mega
-        If skin isn't uploaded into the mega folder, 
+        If skin isn't uploaded into the mega folder,
         it is zipped and then uploaded to the mega folder specified in the .env
     '''
 
@@ -34,7 +36,8 @@ def get_skin_url() -> str:
         return
 
     skin_name = api_data['settings']['folders']['skin']
-    osu_path = os.path.join(api_data['settings']['folders']['songs'], os.pardir)
+    osu_path = os.path.join(
+        api_data['settings']['folders']['songs'], os.pardir)
     skin_folder_path = os.path.join(
         osu_path, os.path.join('Skins', skin_name))
 
@@ -45,16 +48,16 @@ def get_skin_url() -> str:
 
     skins_dict = {}
     with open('skins.json', 'r') as jsonFile:
-            skins_dict = json.load(jsonFile)
-            skin_url = skins_dict.get(skin_name)
-            if skin_url:
-                return skin_url
-        
+        skins_dict = json.load(jsonFile)
+        skin_url = skins_dict.get(skin_name)
+        if skin_url:
+            return skin_url
 
     # checking env
     mega_credentials = data.get_mega_data()
     if [True for match in mega_credentials.values() if match in ['', None]]:
-        print(f"{colors.YELLOW}Your .env is missing Mega values. It will not be able to upload the skin automatically.")
+        print(f'''{colors.YELLOW}Your .env is missing Mega values.
+            It will not be able to upload the skin automatically.''')
         return
 
     # logging into mega account
@@ -68,7 +71,8 @@ def get_skin_url() -> str:
 
     # can't find the specified mega folder, creating it
     if not mega_folder:
-        print(f"{colors.YELLOW}Can't find the specified folder on mega, creating a new one")
+        print(
+            f"{colors.YELLOW}Can't find the specified folder on mega, creating a new one")
         mega_folder = m.create_folder(mega_credentials['MEGA_FOLDER'])
         return "please run the command again to get the URL!"
 
@@ -87,14 +91,14 @@ def get_skin_url() -> str:
 
         # removing the local zip file
         os.remove(f'{skin_name}.osk')
-        
+
         # shortening
         skin_url_short = tinyurl_shortener(skin_url)
 
         # dumping the url to the json file
         skins_dict[skin_name] = skin_url_short
-        with open('skins.json', 'w') as jsonFile:
-            json.dump(skins_dict, jsonFile, indent=4)
+        with open('skins.json', 'w') as json_file:
+            json.dump(skins_dict, json_file, indent=4)
 
         return skin_url_short
 
@@ -102,12 +106,12 @@ def get_skin_url() -> str:
     print(f"{colors.YELLOW}The skin is already on mega!")
     skin_url = m.get_link(mega_file)
 
-    # shortening 
+    # shortening
     skin_url_short = tinyurl_shortener(skin_url)
     skins_dict[skin_name] = skin_url_short
 
     # dumping the url to the json file
-    with open('skins.json', 'w') as jsonFile:
-        json.dump(skins_dict, jsonFile, indent=4)
-        
+    with open('skins.json', 'w') as json_file:
+        json.dump(skins_dict, json_file, indent=4)
+
     return skin_url_short
