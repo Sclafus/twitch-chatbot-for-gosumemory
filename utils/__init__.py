@@ -1,6 +1,3 @@
-import requests
-import os
-
 # colors
 import colorama
 colorama.init(autoreset=True)
