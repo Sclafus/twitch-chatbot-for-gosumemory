@@ -1,10 +1,10 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory/badge)](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory)
 
-
+A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.com/l3lackShark/gosumemory)!
 # Features
 `!np` responds in chat with the currently playing map and a URL for the download link
 
-`!skin` responds in chat with the skin currently in use with a URL to download it. The URL is handled automatically. New skins are automatically uploaded to [mega.nz](https://mega.nz)
+`!skin` responds in chat with the skin currently in use with a URL to download it. The message is dinamically generated. New skins are automatically uploaded to [mega.nz](https://mega.nz). The URLs are automatically shortened using [tinyurl](https://tinyurl.com/)
 
 `!owo` oωo
 # Installation
@@ -38,7 +38,7 @@ to install the required libraries
 ```bash
 
 # Twitch config
-TMI_TOKEN = ####################                  # starts with "oauth:"
+TMI_TOKEN = ####################               # starts with "oauth:"
 CLIENT_ID = ##################
 BOT_NICK = your_chatbot_username
 BOT_PREFIX = !
@@ -47,7 +47,8 @@ GOSUMEMORY_JSON_URL = http://127.0.0.1:24050/json # probably this
 
 # Mega config
 MEGA_EMAIL = example@email.com
-MEGA_PASSWORD = yourpassword                      # since it's not very secure, you should use a throwaway account
+MEGA_PASSWORD = yourpassword                   # not very secure, I know...
+                                               # also 2FA is not supported
 MEGA_FOLDER = folder/subfolder
 ```
 
@@ -63,6 +64,9 @@ Feel free to open an Issue for new features, unexpected behaviors or anything el
 
 If you don't want to open an Issue, you can [DM me on Discord](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
 
+# Special Thanks to:
+- [Gr3g0](https://github.com/Gr3g027) for the skin command
+
+
 # Todos
-- Use an API to short the [mega.nz](https://mega.nz/) URLs
-- Handle MEGA_FOLDER as root folder
+- Handle missing MEGA_FOLDER (defaulting to root folder)
