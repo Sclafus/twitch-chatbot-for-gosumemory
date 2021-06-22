@@ -70,3 +70,4 @@ If you don't want to open an Issue, you can [DM me on Discord](https://discordap
 
 # Todos
 - Handle missing MEGA_FOLDER (defaulting to root folder)
+- Add mikuia-like functionality
