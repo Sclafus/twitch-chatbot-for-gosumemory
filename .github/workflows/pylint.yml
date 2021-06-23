@@ -20,7 +20,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
-        pylint `ls -R|grep .py$|xargs`
+        pylint `ls -R|grep .py$|xargs` | tee pylint.txt
     - name: Upload pylint.txt as artifact
       uses: actions/upload-artifact@v2
       with:
