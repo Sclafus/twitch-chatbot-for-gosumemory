@@ -1,13 +1,13 @@
 from twitchio.ext import commands
 from utils import data, colors
-from skin_uploader import get_skin_url
-
+import sys
 twitch_data = data.get_twitch_data()
 
 # checking env
 if [True for match in twitch_data.values() if match in ['', None]]:
-    print(f"{colors.RED}Your .env is missing Twitch values. The program will not work without them.")
-    exit()
+    print(f"""{colors.RED}Your .env is missing Twitch values.
+     The program will not work without them.""")
+    sys.exit()
 
 
 bot = commands.Bot(
@@ -44,7 +44,8 @@ async def now_playing(ctx):
 
     metadata = data.get_map()
     if metadata:
-        await ctx.send(f"/me {metadata['artist']} - {metadata['title']} [{metadata['diff']}] by {metadata['mapper']} {metadata['url']}")
+        await ctx.send(f"""/me {metadata['artist']} - {metadata['title']}
+         [{metadata['diff']}] by {metadata['mapper']} {metadata['url']}""")
     else:
         await ctx.send("/me Sorry bud, can't help you with that")
 
