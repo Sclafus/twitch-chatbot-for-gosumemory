@@ -1,10 +1,14 @@
+'''
+Helper module to get a skin url and upload it if necessary
+'''
 import os
 import json
+from zipfile import ZipFile
 
 from mega import Mega
-from utils import data, colors
 from requests import get
-from zipfile import ZipFile
+
+from utils import data, colors
 
 
 def tinyurl_shortener(full_url: str) -> str:
@@ -15,10 +19,11 @@ def tinyurl_shortener(full_url: str) -> str:
 
 
 def zip_skin(skin_name: str, skin_folder_path: str):
-    with ZipFile(f'{skin_name}.osk', 'w') as zf:
+    ''' zips the specified skin in a .osk file from the folder defined'''
+    with ZipFile(f'{skin_name}.osk', 'w') as zip_file:
         for root, _, files in os.walk(f'{skin_folder_path}'):
             for file in files:
-                zf.write(os.path.join(root, file))
+                zip_file.write(os.path.join(root, file))
 
 
 def get_skin_url() -> str:
@@ -33,13 +38,11 @@ def get_skin_url() -> str:
 
     # can't fetch api data, exit
     if not api_data:
-        return
+        return None
 
     skin_name = api_data['settings']['folders']['skin']
-    osu_path = os.path.join(
-        api_data['settings']['folders']['songs'], os.pardir)
-    skin_folder_path = os.path.join(
-        osu_path, os.path.join('Skins', skin_name))
+    skin_folder_path = os.path.join(os.path.join(
+        api_data['settings']['folders']['songs'], os.pardir), os.path.join('Skins', skin_name))
 
     # check if the json file exists
     if not os.path.exists(os.path.join(os.path.abspath(os.getcwd()), 'skins.json')):
@@ -58,22 +61,21 @@ def get_skin_url() -> str:
     if [True for match in mega_credentials.values() if match in ['', None]]:
         print(f'''{colors.YELLOW}Your .env is missing Mega values.
             It will not be able to upload the skin automatically.''')
-        return
+        return None
 
     # logging into mega account
-    mega = Mega()
-    mega_email = mega_credentials['MEGA_EMAIL']
-    mega_password = mega_credentials['MEGA_PASSWORD']
-    m = mega.login(mega_email, mega_password)
+    mega_connection = Mega().login(mega_credentials['MEGA_EMAIL'],
+                                   mega_credentials['MEGA_PASSWORD'])
 
-    mega_file = m.find(f'{skin_name}.osk', exclude_deleted=True)
-    mega_folder = m.find(mega_credentials['MEGA_FOLDER'])
+    mega_file = mega_connection.find(f'{skin_name}.osk', exclude_deleted=True)
+    mega_folder = mega_connection.find(mega_credentials['MEGA_FOLDER'])
 
     # can't find the specified mega folder, creating it
     if not mega_folder:
         print(
             f"{colors.YELLOW}Can't find the specified folder on mega, creating a new one")
-        mega_folder = m.create_folder(mega_credentials['MEGA_FOLDER'])
+        mega_folder = mega_connection.create_folder(
+            mega_credentials['MEGA_FOLDER'])
         return "please run the command again to get the URL!"
 
     # the skin is not on mega
@@ -85,8 +87,8 @@ def get_skin_url() -> str:
 
         # uploading skin_name.osk to mega
         print(f"{colors.CYAN}Uploading your current skin")
-        mega_skin = m.upload(f"{skin_name}.osk", mega_folder[0])
-        skin_url = m.get_upload_link(mega_skin)
+        mega_skin = mega_connection.upload(f"{skin_name}.osk", mega_folder[0])
+        skin_url = mega_connection.get_upload_link(mega_skin)
         print(f"{colors.CYAN}Your current skin has been uploaded to mega")
 
         # removing the local zip file
@@ -104,7 +106,7 @@ def get_skin_url() -> str:
 
     # the skin is on mega
     print(f"{colors.YELLOW}The skin is already on mega!")
-    skin_url = m.get_link(mega_file)
+    skin_url = mega_connection.get_link(mega_file)
 
     # shortening
     skin_url_short = tinyurl_shortener(skin_url)
