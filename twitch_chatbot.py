@@ -1,6 +1,10 @@
+'''
+Main program
+'''
+
+import sys
 from twitchio.ext import commands
 from utils import data, colors
-import sys
 twitch_data = data.get_twitch_data()
 
 # checking env

@@ -46,12 +46,12 @@ def get_skin_url() -> str:
 
     # check if the json file exists
     if not os.path.exists(os.path.join(os.path.abspath(os.getcwd()), 'skins.json')):
-        with open('skins.json', 'w') as jsonFile:
-            jsonFile.write("{}")
+        with open('skins.json', 'w') as json_file:
+            json_file.write("{}")
 
     skins_dict = {}
-    with open('skins.json', 'r') as jsonFile:
-        skins_dict = json.load(jsonFile)
+    with open('skins.json', 'r') as json_file:
+        skins_dict = json.load(json_file)
         skin_url = skins_dict.get(skin_name)
         if skin_url:
             return skin_url
