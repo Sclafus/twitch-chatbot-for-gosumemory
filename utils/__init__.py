@@ -1,7 +1,15 @@
-# colors
+'''
+Init module for colors and .env handler
+'''
+
 import colorama
+
+
 colorama.init(autoreset=True)
 class Colors:
+    ''' Color handler '''
+
+    # colors
     NOCOLOR = "\033[0m"
     RED = "\033[91m"
     YELLOW = "\033[93m"

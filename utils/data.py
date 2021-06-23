@@ -1,12 +1,25 @@
+'''
+Helper module to get data from gosumemory, mega and from the .env file
+'''
+
+import requests
+
+from dotenv import load_dotenv
+from os.path import join, dirname, realpath
+from os import pardir, environ
 from utils import colors
 
 
 class Data:
+    '''
+        Data handler using the .env file
+        and gosumemory json to return data for
+        the main program.
+    '''
 
     def __init__(self):
-        from dotenv import load_dotenv
-        from os.path import join, dirname, realpath
-        from os import pardir, environ
+        ''' Class constructor, loads the .env file. '''
+
         load_dotenv(join(join(dirname(realpath(__file__)), pardir), '.env'))
 
         self._twitch_env = {
@@ -25,13 +38,21 @@ class Data:
         }
 
     def get_mega_data(self) -> dict:
+        ''' Returns mega .env data. '''
+
         return self._mega_env
 
     def get_twitch_data(self) -> dict:
+        ''' Returns twitch .env data. '''
+
         return self._twitch_env
 
     def get_gosumemory_data(self) -> dict:
-        import requests
+        ''' 
+            Gets data from gosumemory, returns a dictionary
+            with every information contained in the gosumemory json.
+        '''
+
         try:
             # get data from gosumemory
             api_data = requests.get(self.get_twitch_data()[
@@ -44,7 +65,8 @@ class Data:
             return None
 
     def get_skin(self) -> dict:
-        '''Gets data from gosumemory, returns skin informations'''
+        ''' Gets data from gosumemory, returns skin informations. '''
+
         from skin_uploader import get_skin_url
 
         api_data = self.get_gosumemory_data()
@@ -60,7 +82,7 @@ class Data:
         return None
 
     def get_map(self) -> dict:
-        '''Gets data from gosumemory, returns current beatmap informations'''
+        ''' Gets data from gosumemory, returns current beatmap informations. '''
 
         api_data = self.get_gosumemory_data()
         if api_data:

@@ -1,6 +1,7 @@
 '''
 Helper module to get a skin url and upload it if necessary
 '''
+
 import os
 import json
 from zipfile import ZipFile
@@ -12,14 +13,16 @@ from utils import data, colors
 
 
 def tinyurl_shortener(full_url: str) -> str:
-    '''Returns a shortened url for the provided url'''
+    ''' Returns a shortened url for the provided url. '''
+
     api = 'https://tinyurl.com/api-create.php'
     params = {'url': full_url}
-    return get(api, params).textd
+    return get(api, params).text
 
 
 def zip_skin(skin_name: str, skin_folder_path: str):
-    ''' zips the specified skin in a .osk file from the folder defined'''
+    ''' Zips the specified skin in a .osk file from the folder defined. '''
+
     with ZipFile(f'{skin_name}.osk', 'w') as zip_file:
         for root, _, files in os.walk(skin_folder_path):
             for file in files:
@@ -29,9 +32,10 @@ def zip_skin(skin_name: str, skin_folder_path: str):
 
 def get_skin_url() -> str:
     '''
-        Returns the current skin url from mega
+        Returns the current skin url from mega.
         If skin isn't uploaded into the mega folder,
-        it is zipped and then uploaded to the mega folder specified in the .env
+        it is zipped and then uploaded to the mega
+        folder specified in the .env file.
     '''
 
     # getting skin name and skin path from gosumemory
