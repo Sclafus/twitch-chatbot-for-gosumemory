@@ -15,15 +15,16 @@ def tinyurl_shortener(full_url: str) -> str:
     '''Returns a shortened url for the provided url'''
     api = 'https://tinyurl.com/api-create.php'
     params = {'url': full_url}
-    return get(api, params).text
+    return get(api, params).textd
 
 
 def zip_skin(skin_name: str, skin_folder_path: str):
     ''' zips the specified skin in a .osk file from the folder defined'''
     with ZipFile(f'{skin_name}.osk', 'w') as zip_file:
-        for root, _, files in os.walk(f'{skin_folder_path}'):
+        for root, _, files in os.walk(skin_folder_path):
             for file in files:
-                zip_file.write(os.path.join(root, file), arcname=file)
+                zip_file.write(os.path.join(root, file), arcname=os.path.relpath(
+                    os.path.join(root, file), skin_folder_path))
 
 
 def get_skin_url() -> str:
