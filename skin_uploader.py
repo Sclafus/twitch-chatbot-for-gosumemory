@@ -23,7 +23,7 @@ def zip_skin(skin_name: str, skin_folder_path: str):
     with ZipFile(f'{skin_name}.osk', 'w') as zip_file:
         for root, _, files in os.walk(f'{skin_folder_path}'):
             for file in files:
-                zip_file.write(os.path.join(root, file))
+                zip_file.write(os.path.join(root, file), arcname=file)
 
 
 def get_skin_url() -> str:
