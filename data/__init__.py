@@ -24,8 +24,7 @@ class Data:
     def __init__(self):
         ''' Class constructor, loads the .env file. '''
 
-        load_dotenv(
-            join(join(dirname(realpath(__file__)), pardir), 'config.txt'))
+        load_dotenv('config.txt')
 
         self._twitch_env = {
             "TMI_TOKEN": environ.get('TMI_TOKEN'),
@@ -103,8 +102,8 @@ class Data:
         # checking env
         mega_credentials = data.get_mega_data()
         if [True for match in mega_credentials.values() if match in ['', None]]:
-            print(f'''{colors.YELLOW}Your .env is missing Mega values.
-                It will not be able to upload the skin automatically.''')
+            print(f"{colors.YELLOW}Your .env is missing Mega values."
+                "It will not be able to upload the skin automatically.")
             return None
 
         # logging into mega account

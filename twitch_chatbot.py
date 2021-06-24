@@ -12,8 +12,8 @@ twitch_data = data.get_twitch_data()
 
 # checking env
 if [True for match in twitch_data.values() if match in ['', None]]:
-    print(f"""{colors.RED}Your .env is missing Twitch values.
-     The program will not work without them.""")
+    print(f"{colors.RED}Your .env is missing Twitch values."
+     "The program will not work without them.")
     sys.exit()
 
 
