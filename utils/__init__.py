@@ -2,27 +2,28 @@
 Init module for colors and .env handler
 '''
 
-import colorama
-from utils.data import Data
+import os
+from zipfile import ZipFile
 
+from requests import get
+import colorama
 
 colorama.init(autoreset=True)
 
 
-class Colors:
-    ''' Color handler '''
-    # pylint: disable=too-few-public-methods
+def tinyurl_shortener(full_url: str) -> str:
+    ''' Returns a shortened url for the provided url. '''
 
-    # colors
-    NOCOLOR = "\033[0m"
-    RED = "\033[91m"
-    YELLOW = "\033[93m"
-    GREEN = "\033[92m"
-    CYAN = "\033[96m"
-    LIGHT_PURPLE = "\033[95m"
+    api = 'https://tinyurl.com/api-create.php'
+    params = {'url': full_url}
+    return get(api, params).text
 
 
-colors = Colors()
+def zip_skin(skin_name: str, skin_folder_path: str):
+    ''' Zips the specified skin in a .osk file from the folder defined. '''
 
-# .env handler
-data = Data()
+    with ZipFile(f'{skin_name}.osk', 'w') as zip_file:
+        for root, _, files in os.walk(skin_folder_path):
+            for file in files:
+                zip_file.write(os.path.join(root, file), arcname=os.path.relpath(
+                    os.path.join(root, file), skin_folder_path))

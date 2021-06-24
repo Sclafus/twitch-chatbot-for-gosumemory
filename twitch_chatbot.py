@@ -4,7 +4,8 @@ Main program
 
 import sys
 from twitchio.ext import commands
-from utils import data, colors
+from colors import colors
+from data import data
 
 
 twitch_data = data.get_twitch_data()
