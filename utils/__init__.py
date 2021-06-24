@@ -6,10 +6,6 @@ import os
 from zipfile import ZipFile
 
 from requests import get
-import colorama
-
-colorama.init(autoreset=True)
-
 
 def tinyurl_shortener(full_url: str) -> str:
     ''' Returns a shortened url for the provided url. '''

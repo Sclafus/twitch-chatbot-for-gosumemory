@@ -1,5 +1,9 @@
 ''' Colors package'''
 
+import colorama
+
+colorama.init(autoreset=True)
+
 
 class Colors:
     ''' Color handler '''
