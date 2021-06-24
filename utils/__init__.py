@@ -2,8 +2,8 @@
 Init module for colors and .env handler
 '''
 
-from utils.data import Data
 import colorama
+from utils.data import Data
 
 
 colorama.init(autoreset=True)
@@ -11,6 +11,7 @@ colorama.init(autoreset=True)
 
 class Colors:
     ''' Color handler '''
+    # pylint: disable=too-few-public-methods
 
     # colors
     NOCOLOR = "\033[0m"
