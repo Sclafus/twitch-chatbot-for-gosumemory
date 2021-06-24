@@ -28,16 +28,15 @@ to install the required libraries
 ## Step 2: create a new twitch app
 - Login on [Twitch Developers](https://dev.twitch.tv/)
 - Register a [new Twitch Application](https://dev.twitch.tv/console/apps). Choose a name (eg. "Osu Chatbot") and set your URL to `https://127.0.0.1`. The category should be "Chat Bot".
-- Copy the `Client ID`, it will be needed in [Step 3](#step-3-create-env)
+- Copy the `Client ID`, it will be needed in [Step 3](#step-3-create-config)
 
 - Open your browser in incognito mode and visit [twitchapps](https://twitchapps.com/tmi/) to get your oauth token. You will need to login with your bot account, not your main account.
 - Copy the oauth token
 
-## Step 3: create .env
-- Create a .env file with the following content:
+## Step 3: create config
+- Create a `config.txt` file with the following content:
 
 ```bash
-
 # Twitch config
 TMI_TOKEN = ####################               # starts with "oauth:"
 CLIENT_ID = ##################
