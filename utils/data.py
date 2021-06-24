@@ -2,12 +2,14 @@
 Helper module to get data from gosumemory, mega and from the .env file
 '''
 
-import requests
-
-from dotenv import load_dotenv
 from os.path import join, dirname, realpath
 from os import pardir, environ
+
+import requests
+from dotenv import load_dotenv
+
 from utils import colors
+from skin_uploader import get_skin_url
 
 
 class Data:
@@ -48,7 +50,7 @@ class Data:
         return self._twitch_env
 
     def get_gosumemory_data(self) -> dict:
-        ''' 
+        '''
             Gets data from gosumemory, returns a dictionary
             with every information contained in the gosumemory json.
         '''
@@ -59,15 +61,13 @@ class Data:
                                     'GOSUMEMORY_JSON']).json()
             return api_data if 'error' not in api_data else None
 
-        except requests.exceptions.ConnectionError as err:
+        except requests.exceptions.ConnectionError:
             # error handling, can't connect to gosumemory
             print(f"{colors.RED}Could not connect to gosumemory socket!")
             return None
 
     def get_skin(self) -> dict:
         ''' Gets data from gosumemory, returns skin informations. '''
-
-        from skin_uploader import get_skin_url
 
         api_data = self.get_gosumemory_data()
         if api_data:
