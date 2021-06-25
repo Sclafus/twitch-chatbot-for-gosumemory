@@ -9,6 +9,12 @@ A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.c
 
 `!owo` oωo
 # Installation
+- Download the [latest release](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/releases/latest) for your operating system (coming soon...)
+
+- Follow [Step 2](#step-2-create-a-new-twitch-app) and [Step 3](#step-3-create-config)
+
+- Open your executable and enjoy
+# Development Installation
 
 ## Step 1: clone the repository, install python and dependencies 
 - Install [Python](https://www.python.org/) and add it to PATH
@@ -55,19 +61,22 @@ MEGA_FOLDER = folder/subfolder
 ## Step 4: play more
 - Execute `python twitch_chatbot.py` in the terminal or simply double click it
 
-# Contributions
-We are very open to contribution and constructive criticism! 
-
+# Bug Reports
 
 Feel free to open an Issue for new features, unexpected behaviors or anything else really!
 
-
 If you don't want to open an Issue, you can [DM me on Discord](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
+
+# Contributions
+We are very open to contribution and constructive criticism!
+
+If you want to contribute to this project in any way, make a fork and make a pull request!
 
 # Special Thanks to:
 - [Gr3g0](https://github.com/Gr3g027) for the skin command
 
 
-# Todos
-- Handle missing MEGA_FOLDER (defaulting to root folder)
+# Todos sorted by priority
+- Automatic builds on commit using pyinstaller
 - Add mikuia-like functionality
+- Handle missing MEGA_FOLDER (defaulting to root folder)
