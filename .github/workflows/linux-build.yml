@@ -1,0 +1,24 @@
+name: Linux Build
+
+on:
+  push:
+    branches: [senpai]
+  pull_request:
+    branches: [senpai]
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-linux@main
+        with:
+          path: src
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: name-of-artifact
+          path: src/dist/linux
