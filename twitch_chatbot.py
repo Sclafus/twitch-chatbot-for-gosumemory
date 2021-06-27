@@ -6,14 +6,15 @@ import sys
 from twitchio.ext import commands
 from colors import colors
 from data import data
-
+from re import findall
+from utils import get_map_infos
 
 twitch_data = data.get_twitch_data()
 
 # checking env
 if [True for match in twitch_data.values() if match in ['', None]]:
-    print(f"{colors.RED}Your .env is missing Twitch values."
-     "The program will not work without them.")
+    print(f"{colors.RED}Your config file is missing Twitch values."
+          "The program will not work without them.")
     sys.exit()
 
 
@@ -37,8 +38,17 @@ async def event_ready():
 async def event_message(ctx):
     ''' Runs once every time a new message appears in chat. '''
 
+    # highlighting bot messages
     if ctx.author.name.lower() == twitch_data['BOT_NICK'].lower():
         chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.GREEN}{ctx.content}"
+
+    # map requests
+    urls = findall(
+        r'(https?://osu.ppy.sh/(b|beatmaps|beatmapsets)/[^\s]+)', ctx.content)
+    if urls:
+        chat_msg = urls
+        for url in urls:
+            get_map_infos(url[0], url[1])
     else:
         chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.NOCOLOR}{ctx.content}"
     print(chat_msg)

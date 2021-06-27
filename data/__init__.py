@@ -1,5 +1,5 @@
 '''
-Helper module to get data from gosumemory, mega and from the .env file
+Helper module to get data from gosumemory, mega and from the config file
 '''
 
 from os.path import join, dirname, realpath, abspath, exists
@@ -16,13 +16,13 @@ from utils import zip_skin, tinyurl_shortener
 
 class Data:
     '''
-        Data handler using the .env file
+        Data handler using the config file
         and gosumemory json to return data for
         the main program.
     '''
 
     def __init__(self):
-        ''' Class constructor, loads the .env file. '''
+        ''' Class constructor, loads the config file. '''
 
         load_dotenv('config.txt')
 
@@ -42,12 +42,12 @@ class Data:
         }
 
     def get_mega_data(self) -> dict:
-        ''' Returns mega .env data. '''
+        ''' Returns mega config data. '''
 
         return self._mega_env
 
     def get_twitch_data(self) -> dict:
-        ''' Returns twitch .env data. '''
+        ''' Returns twitch config data. '''
 
         return self._twitch_env
 
@@ -73,7 +73,7 @@ class Data:
             Returns the current skin url from mega.
             If skin isn't uploaded into the mega folder,
             it is zipped and then uploaded to the mega
-            folder specified in the .env file.
+            folder specified in the config file.
         '''
 
         # getting skin name and skin path from gosumemory
@@ -102,7 +102,7 @@ class Data:
         # checking env
         mega_credentials = data.get_mega_data()
         if [True for match in mega_credentials.values() if match in ['', None]]:
-            print(f"{colors.YELLOW}Your .env is missing Mega values."
+            print(f"{colors.YELLOW}Your config is missing Mega values."
                 "It will not be able to upload the skin automatically.")
             return None
 
