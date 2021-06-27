@@ -38,6 +38,9 @@ async def event_ready():
 async def event_message(ctx):
     ''' Runs once every time a new message appears in chat. '''
 
+    # standard chat message
+    chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.NOCOLOR}{ctx.content}"
+
     # highlighting bot messages
     if ctx.author.name.lower() == twitch_data['BOT_NICK'].lower():
         chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.GREEN}{ctx.content}"
@@ -46,11 +49,11 @@ async def event_message(ctx):
     urls = findall(
         r'(https?://osu.ppy.sh/(b|beatmaps|beatmapsets)/[^\s]+)', ctx.content)
     if urls:
-        chat_msg = urls
         for url in urls:
-            get_map_infos(url[0], url[1])
-    else:
-        chat_msg = f"{colors.LIGHT_PURPLE}{ctx.author.name}: {colors.NOCOLOR}{ctx.content}"
+            map_infos = get_map_infos(url[0], url[1])
+            chat_msg += (f"{colors.GREEN} ||| {map_infos['artist']} - " 
+            f"{map_infos['title']} [{map_infos['diff']['name']}] " 
+            f"{map_infos['diff']['stars']}★ |||{colors.NOCOLOR}\n")
     print(chat_msg)
     await bot.handle_commands(ctx)
 
