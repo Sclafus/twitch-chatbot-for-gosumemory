@@ -28,7 +28,7 @@ def zip_skin(skin_name: str, skin_folder_path: str) -> None:
                     os.path.join(root, file), skin_folder_path))
 
 
-def get_map_infos(url: str, type: str):
+def get_map_infos(url: str):
     ''' Gets the map info using web scraping. '''
 
     # scraping

@@ -3,10 +3,12 @@ Main program
 '''
 
 import sys
+from re import findall
+
 from twitchio.ext import commands
+
 from colors import colors
 from data import data
-from re import findall
 from utils import get_map_infos
 
 twitch_data = data.get_twitch_data()
@@ -15,7 +17,7 @@ twitch_data = data.get_twitch_data()
 if [True for match in twitch_data.values() if match in ['', None]]:
     print(f"{colors.RED}Your config file is missing Twitch values."
           "The program will not work without them.")
-    sys.exit()
+    raise KeyboardInterrupt
 
 
 bot = commands.Bot(
@@ -50,10 +52,11 @@ async def event_message(ctx):
         r'(https?://osu.ppy.sh/(b|beatmaps|beatmapsets)/[^\s]+)', ctx.content)
     if urls:
         for url in urls:
-            map_infos = get_map_infos(url[0], url[1])
-            chat_msg += (f"{colors.GREEN} ||| {map_infos['artist']} - " 
-            f"{map_infos['title']} [{map_infos['diff']['name']}] " 
-            f"{map_infos['diff']['stars']}★ |||{colors.NOCOLOR}\n")
+            map_infos = get_map_infos(url[0])
+            chat_msg += (f"{colors.GREEN} ||| {map_infos['artist']} - "
+                         f"{map_infos['title']} [{map_infos['diff']['name']}] "
+                         f"{map_infos['diff']['stars']}★ |||{colors.NOCOLOR} ")
+
     print(chat_msg)
     await bot.handle_commands(ctx)
 
