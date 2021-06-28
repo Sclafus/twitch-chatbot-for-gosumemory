@@ -18,7 +18,7 @@ def tinyurl_shortener(full_url: str) -> str:
     return get(api, params).text
 
 
-def zip_skin(skin_name: str, skin_folder_path: str) -> None:
+def zip_skin(skin_name: str, skin_folder_path: str) -> dict:
     ''' Zips the specified skin in a .osk file from the folder defined. '''
 
     with ZipFile(f'{skin_name}.osk', 'w') as zip_file:
@@ -35,6 +35,9 @@ def get_map_infos(url: str):
     webpage = get(url)
     soup = BeautifulSoup(webpage.content, 'html.parser')
     tag = soup.find(id='json-beatmapset')
+
+    if not tag:
+        return None
 
     # loading data as json
     json_data = json.loads(tag.contents[0])

@@ -2,7 +2,6 @@
 Main program
 '''
 
-import sys
 from re import findall
 
 from twitchio.ext import commands
