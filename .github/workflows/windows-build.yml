@@ -2,7 +2,7 @@ name: Windows Build
 
 on:
   push:
-    branches: [windows-build-test]
+    branches: [senpai]
   pull_request:
     branches: [senpai]
 
