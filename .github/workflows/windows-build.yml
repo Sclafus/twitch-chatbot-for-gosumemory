@@ -2,7 +2,7 @@ name: Linux Build
 
 on:
   push:
-    branches: [senpai]
+    branches: [windows-build-test]
   pull_request:
     branches: [senpai]
 
