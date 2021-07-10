@@ -1,4 +1,4 @@
-name: Linux Build
+name: Windows Build
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [senpai]
 
 jobs:
-  linux-build:
+  windows-build:
     runs-on: windows-latest
 
     steps:
@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Windows Build
-          path: dist/twitch_chatbot
+          path: dist/twitch_chatbot.exe
