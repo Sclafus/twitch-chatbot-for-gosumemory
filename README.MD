@@ -15,7 +15,7 @@ A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.c
 
 - Open your executable and enjoy
 # Development Installation
-
+As of today, `twitchio` has been forced to version 1.2.3 in `requirements.txt`. This is needed since `twitchio` version 2.0 is now out and I don't really have time to port the existing version to the new version at the moment. I might assume that `twitchio` 2.0 fixes the error with `websockets>=9.0`. I will fix everything soon™️. ETA: October 2021 (quite busy at the moment sorry lads).
 ## Step 1: clone the repository, install python and dependencies 
 - Install [Python](https://www.python.org/) and add it to PATH
 
@@ -77,6 +77,7 @@ If you want to contribute to this project in any way, make a fork and make a pul
 
 
 # Todos sorted by priority
+- Switch to twitchio 2.0
 - Automatic builds on commit using pyinstaller
 - Add mikuia-like functionality
 - Handle missing MEGA_FOLDER (defaulting to root folder)
