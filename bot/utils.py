@@ -44,19 +44,32 @@ def get_map_infos(url: str):
     diffs_data = json_data['beatmaps']
 
     # getting top diff when a set is passed
-    diffs = []
-    for diff_data in diffs_data:
-        diffs.append({
-            'name': diff_data['version'],
-            'stars': diff_data['difficulty_rating'],
-            'id': diff_data['id'],
-            'bpm': diff_data['bpm'],
-            'ar': diff_data['ar'],
-            'cs': diff_data['cs']
-        })
+    # diffs = []
+    # for diff_data in diffs_data:
+    #     diffs.append({
+    #         'name': diff_data['version'],
+    #         'stars': diff_data['difficulty_rating'],
+    #         'id': diff_data['id'],
+    #         'bpm': diff_data['bpm'],
+    #         'ar': diff_data['ar'],
+    #         'cs': diff_data['cs']
+    #     })
+    # diffs = [{'name': diff_data['version'],
+    #           'stars': diff_data['difficulty_rating'],
+    #           'id': diff_data['id'],
+    #           'bpm': diff_data['bpm'],
+    #           'ar': diff_data['ar'],
+    #           'cs': diff_data['cs']
+    #     } for diff_data in json_data['beatmaps']]
 
     # finding top diff
-    diff = max(diffs, key=lambda x: x['stars'])
+    diff = max([{'name': diff_data['version'],
+              'stars': diff_data['difficulty_rating'],
+              'id': diff_data['id'],
+              'bpm': diff_data['bpm'],
+              'ar': diff_data['ar'],
+              'cs': diff_data['cs']
+        } for diff_data in json_data['beatmaps']], key=lambda x: x['stars'])
 
     return {
         'artist': json_data['artist'],

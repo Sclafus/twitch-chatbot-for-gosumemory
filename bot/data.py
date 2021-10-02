@@ -9,7 +9,6 @@ from json import load, dump
 import requests
 from dotenv import load_dotenv
 from mega import Mega
-
 from colors import colors
 from utils import zip_skin, tinyurl_shortener
 

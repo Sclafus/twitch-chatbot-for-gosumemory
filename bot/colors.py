@@ -17,5 +17,4 @@ class Colors:
     CYAN = "\033[96m"
     LIGHT_PURPLE = "\033[95m"
 
-
 colors = Colors()
