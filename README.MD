@@ -2,6 +2,8 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Sclafus/twitch-chatbot-for-gosumemory/Pylint?style=flat)
 
 A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.com/l3lackShark/gosumemory)!
+
+# Big refactoring going on! The bot might not work until i'm done!
 # Features
 `!np` responds in chat with the currently playing map and a URL for the download link
 
@@ -9,13 +11,13 @@ A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.c
 
 `!owo` oωo
 # Installation
-- Download the [latest release](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/releases/latest) for your operating system (coming soon...)
+- Download the [latest release](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/releases/latest) for your operating system (Windows builds are UNTESTED, keep that in mind)
 
 - Follow [Step 2](#step-2-create-a-new-twitch-app) and [Step 3](#step-3-create-config)
 
 - Open your executable and enjoy
 # Development Installation
-As of today, `twitchio` has been forced to version 1.2.3 in `requirements.txt`. This is needed since `twitchio` version 2.0 is now out and I don't really have time to port the existing version to the new version at the moment. I might assume that `twitchio` 2.0 fixes the error with `websockets>=9.0`. I will fix everything soon™️. ETA: October 2021 (quite busy at the moment sorry lads).
+As of today, `twitchio` has been forced to version 1.2.3 in `requirements.txt`. This is needed since `twitchio` version 2.0 is now out and I don't really have time to port the existing version to the new version at the moment. `twitchio` 2.0 fixes the error with `websockets>=9.0`. I will fix everything soon™️. ETA: Decemeber 2021 (quite busy at the moment sorry lads).
 ## Step 1: clone the repository, install python and dependencies 
 - Install [Python](https://www.python.org/) and add it to PATH
 
@@ -65,7 +67,7 @@ MEGA_FOLDER = folder/subfolder
 
 Feel free to open an Issue for new features, unexpected behaviors or anything else really!
 
-If you don't want to open an Issue, you can [DM me on Discord](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
+If you don't want to open an Issue, you can DM me on Discord [Scla#1877](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
 
 # Contributions
 We are very open to contribution and constructive criticism!
