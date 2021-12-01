@@ -79,7 +79,9 @@ If you want to contribute to this project in any way, make a fork and make a pul
 
 
 # Todos sorted by priority
-- Switch to twitchio 2.0
-- Automatic builds on commit using pyinstaller
-- Add mikuia-like functionality
+- ~~Switch to twitchio 2.0~~
+- ~~Automatic builds on commit using pyinstaller~~
+- Modular commands
 - Handle missing MEGA_FOLDER (defaulting to root folder)
+- Add password protect mode (encrypts all the sensibile informations)
+- Add mikuia-like functionality
