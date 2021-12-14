@@ -1,4 +1,3 @@
-from os import stat
 import re
 
 class Osu:
