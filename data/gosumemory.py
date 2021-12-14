@@ -2,15 +2,15 @@
 Helper module to get data from gosumemory, mega and from the config file
 '''
 
-from os.path import join, dirname, realpath, abspath, exists
+from os.path import join, abspath, exists
 from os import pardir, environ, getcwd, remove
 from json import load, dump
 
 import requests
 from dotenv import load_dotenv
 from mega import Mega
-from colors import colors
-from utils import zip_skin, tinyurl_shortener
+from outputs.colors import colors
+from utils.utils import zip_skin, tinyurl_shortener
 
 
 class Data:
@@ -64,7 +64,7 @@ class Data:
 
         except requests.exceptions.ConnectionError:
             # error handling, can't connect to gosumemory
-            print(f"{colors.RED}Could not connect to gosumemory socket!")
+            print(f"{colors['RED']}Could not connect to gosumemory socket!")
             return None
 
     def get_skin_url(self) -> str:
@@ -101,7 +101,7 @@ class Data:
         # checking env
         mega_credentials = data.get_mega_data()
         if [True for match in mega_credentials.values() if match in ['', None]]:
-            print(f"{colors.YELLOW}Your config is missing Mega values."
+            print(f"{colors['YELLOW']}Your config is missing Mega values."
                 "It will not be able to upload the skin automatically.")
             return None
 
@@ -116,7 +116,7 @@ class Data:
         # can't find the specified mega folder, creating it
         if not mega_folder:
             print(
-                f"{colors.YELLOW}Can't find the specified folder on mega, creating a new one")
+                f"{colors['YELLOW']}Can't find the specified folder on mega, creating a new one")
             mega_folder = mega_connection.create_folder(
                 mega_credentials['MEGA_FOLDER'])
             return "please run the command again to get the URL!"
@@ -125,15 +125,15 @@ class Data:
         if not mega_file:
 
             # zipping the skin folder as skin_name.osk
-            print(f"{colors.CYAN}Zipping your current skin")
+            print(f"{colors['CYAN']}Zipping your current skin")
             zip_skin(skin_name, skin_folder_path)
 
             # uploading skin_name.osk to mega
-            print(f"{colors.CYAN}Uploading your current skin")
+            print(f"{colors['CYAN']}Uploading your current skin")
             mega_skin = mega_connection.upload(
                 f"{skin_name}.osk", mega_folder[0])
             skin_url = mega_connection.get_upload_link(mega_skin)
-            print(f"{colors.CYAN}Your current skin has been uploaded to mega")
+            print(f"{colors['CYAN']}Your current skin has been uploaded to mega")
 
             # removing the local zip file
             remove(f'{skin_name}.osk')
@@ -149,7 +149,7 @@ class Data:
             return skin_url_short
 
         # the skin is on mega
-        print(f"{colors.YELLOW}The skin is already on mega!")
+        print(f"{colors['YELLOW']}The skin is already on mega!")
         skin_url = mega_connection.get_link(mega_file)
 
         # shortening

@@ -41,7 +41,7 @@ def get_map_infos(url: str):
 
     # loading data as json
     json_data = json.loads(tag.contents[0])
-    diffs_data = json_data['beatmaps']
+    # diffs_data = json_data['beatmaps']
 
     # getting top diff when a set is passed
     # diffs = []
