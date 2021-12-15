@@ -2,9 +2,10 @@
 Main program
 '''
 from bot.bot import Bot
-from data.gosumemory import data
+from data.config import Config
 
 if __name__ == '__main__':
-    bot = Bot(access_token=data.get_twitch_data()[
-              'TMI_TOKEN'], prefix='!', channels=[data.get_twitch_data()['CHANNEL']])
+    config = Config()
+    bot = Bot(access_token=config.get_twitch_data()[
+              'TMI_TOKEN'], prefix='!', channels=[config.get_twitch_data()['CHANNEL']])
     bot.run()
