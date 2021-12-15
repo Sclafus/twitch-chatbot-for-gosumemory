@@ -43,7 +43,8 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def skin(self, ctx: commands.Context):
-        await ctx.send("la mia skin epica owo")
+        skin = gosumemory.get_skin()
+        await ctx.send(f"{skin['skin']} {skin['url']}")
 
     @commands.command()
     async def owo(self, ctx: commands.Context):
