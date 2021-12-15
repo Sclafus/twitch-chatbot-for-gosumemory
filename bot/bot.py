@@ -3,7 +3,7 @@ from twitchio.ext import commands
 
 from outputs.outputs import Outputs
 from bot.osu_specific import Osu
-from data.gosumemory import data
+from data.gosumemory import gosumemory
 
 
 class Bot(commands.Bot):
@@ -35,8 +35,11 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def np(self, ctx: commands.Context):
-        metadata = data.get_map()
-        await ctx.send(f'{self.outputs.string_map(metadata=metadata)}')
+        metadata = gosumemory.get_map()
+        if metadata:
+            await ctx.send(f'{self.outputs.string_map(metadata=metadata)}')
+        else:
+            await ctx.send('Could not connect to gosumemory, sorry!')
 
     @commands.command()
     async def skin(self, ctx: commands.Context):
