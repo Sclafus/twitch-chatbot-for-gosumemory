@@ -3,52 +3,23 @@ Helper module to get data from gosumemory, mega and from the config file
 '''
 
 from os.path import join, abspath, exists
-from os import pardir, environ, getcwd, remove
+from os import pardir, getcwd, remove
 from json import load, dump
 
 import requests
-from dotenv import load_dotenv
 from mega import Mega
-from outputs.colors import colors
+
+from outputs.outputs import Outputs
 from utils.utils import zip_skin, tinyurl_shortener
+from .config import Config
 
 
-class Data:
-    '''
-        Data handler using the config file
-        and gosumemory json to return data for
-        the main program.
-    '''
+class Gosumemory:
 
     def __init__(self):
         ''' Class constructor, loads the config file. '''
-
-        load_dotenv('config.txt')
-
-        self._twitch_env = {
-            "TMI_TOKEN": environ.get('TMI_TOKEN'),
-            "CLIENT_ID": environ.get('CLIENT_ID'),
-            "BOT_NICK": environ.get('BOT_NICK'),
-            "BOT_PREFIX": environ.get('BOT_PREFIX'),
-            "CHANNEL": environ.get('CHANNEL'),
-            "GOSUMEMORY_JSON": environ.get('GOSUMEMORY_JSON_URL')
-        }
-
-        self._mega_env = {
-            "MEGA_EMAIL": environ.get('MEGA_EMAIL'),
-            "MEGA_PASSWORD": environ.get('MEGA_PASSWORD'),
-            "MEGA_FOLDER": environ.get('MEGA_FOLDER')
-        }
-
-    def get_mega_data(self) -> dict:
-        ''' Returns mega config data. '''
-
-        return self._mega_env
-
-    def get_twitch_data(self) -> dict:
-        ''' Returns twitch config data. '''
-
-        return self._twitch_env
+        self._config = Config()
+        self.gosumemory_url = self._config.GOSUMEMORY_JSON
 
     def get_gosumemory_data(self) -> dict:
         '''
@@ -58,15 +29,15 @@ class Data:
 
         try:
             # get data from gosumemory
-            api_data = requests.get(self.get_twitch_data()[
-                                    'GOSUMEMORY_JSON']).json()
+            api_data = requests.get(self.gosumemory_url).json()
             return api_data if 'error' not in api_data else None
 
         except requests.exceptions.ConnectionError:
             # error handling, can't connect to gosumemory
-            print(f"{colors['RED']}Could not connect to gosumemory socket!")
+            Outputs.print_error("Could not connect to gosumemory socket!")
             return None
 
+    #TODO refactor and move mega stuff to a method
     def get_skin_url(self) -> str:
         '''
             Returns the current skin url from mega.
@@ -99,10 +70,10 @@ class Data:
                 return skin_url
 
         # checking env
-        mega_credentials = data.get_mega_data()
+        mega_credentials = self._config.get_mega_data()
         if [True for match in mega_credentials.values() if match in ['', None]]:
-            print(f"{colors['YELLOW']}Your config is missing Mega values."
-                "It will not be able to upload the skin automatically.")
+            Outputs.print_warning("Your config is missing Mega values."
+                                  "It will not be able to upload the skin automatically.")
             return None
 
         # logging into mega account
@@ -115,8 +86,7 @@ class Data:
 
         # can't find the specified mega folder, creating it
         if not mega_folder:
-            print(
-                f"{colors['YELLOW']}Can't find the specified folder on mega, creating a new one")
+            Outputs.print_warning("Can't find the specified folder on mega, creating a new one")
             mega_folder = mega_connection.create_folder(
                 mega_credentials['MEGA_FOLDER'])
             return "please run the command again to get the URL!"
@@ -125,15 +95,15 @@ class Data:
         if not mega_file:
 
             # zipping the skin folder as skin_name.osk
-            print(f"{colors['CYAN']}Zipping your current skin")
+            Outputs.print_info("Zipping your current skin")
             zip_skin(skin_name, skin_folder_path)
 
             # uploading skin_name.osk to mega
-            print(f"{colors['CYAN']}Uploading your current skin")
+            Outputs.print_info("Uploading your current skin")
             mega_skin = mega_connection.upload(
                 f"{skin_name}.osk", mega_folder[0])
             skin_url = mega_connection.get_upload_link(mega_skin)
-            print(f"{colors['CYAN']}Your current skin has been uploaded to mega")
+            Outputs.print_info("Your current skin has been uploaded to mega")
 
             # removing the local zip file
             remove(f'{skin_name}.osk')
@@ -149,7 +119,7 @@ class Data:
             return skin_url_short
 
         # the skin is on mega
-        print(f"{colors['YELLOW']}The skin is already on mega!")
+        Outputs.print_info("The skin is already on mega!")
         skin_url = mega_connection.get_link(mega_file)
 
         # shortening
@@ -197,4 +167,4 @@ class Data:
         return None
 
 
-data = Data()
+gosumemory = Gosumemory()
