@@ -19,6 +19,11 @@ class Outputs():
         print(f"{colors['RED']}{error}{colors['NOCOLOR']}")
 
     @staticmethod
+    def print_warning(warning: str) -> None:
+        '''prints an error message to the terminal with colors'''
+        print(f"{colors['YELLOW']}{warning}{colors['NOCOLOR']}")
+
+    @staticmethod
     def print_map_request(author: str, message: str) -> None:
         '''prints an osu map request to the terminal with colors'''
         # TODO
