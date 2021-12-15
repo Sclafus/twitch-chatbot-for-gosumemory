@@ -1,10 +1,7 @@
 name: Linux Build
 
 on:
-  push:
-    branches: [senpai]
-  pull_request:
-    branches: [senpai]
+  workflow_dispatch
 
 jobs:
   linux-build:
