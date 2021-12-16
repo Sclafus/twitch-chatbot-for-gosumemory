@@ -1,12 +1,14 @@
+'''Bot module'''
 from twitchio.ext import commands
 
-
+# pylint: disable=import-error
+from osu_specific import Osu
 from outputs.outputs import Outputs
-from bot.osu_specific import Osu
 from data.gosumemory import gosumemory
 
 
 class Bot(commands.Bot):
+    '''Bot class, handles all the bot logic'''
 
     def __init__(self, access_token='', prefix='', channels=None):
         '''Bot class constructor'''
@@ -25,16 +27,19 @@ class Bot(commands.Bot):
         # if osu.is_map_request(message.content):
         #     outputs.print_map_request(author=message.author.name, message=message.content)
         # else:
-        if message.echo: return
-        self.outputs.print_message(author=message.author.name, message=message.content)
+        if message.echo:
+            return
+        self.outputs.print_message(message.author.name, message.content)
 
         await self.handle_commands(message)
 
     # async def event_error(error, data):
     #     outputs.print_error(data)
 
+    # pylint: disable=invalid-name
     @commands.command()
     async def np(self, ctx: commands.Context):
+        '''Now playing command'''
         metadata = gosumemory.get_map()
         if metadata:
             await ctx.send(f'{self.outputs.string_map(metadata=metadata)}')
@@ -43,9 +48,14 @@ class Bot(commands.Bot):
 
     @commands.command()
     async def skin(self, ctx: commands.Context):
+        '''Skin command'''
         skin = gosumemory.get_skin()
-        await ctx.send(f"{skin['skin']} {skin['url']}")
+        if skin:
+            await ctx.send(f"{skin['skin']} {skin['url']}")
+        else:
+            await ctx.send('Could not connect to gosumemory, sorry!')
 
     @commands.command()
     async def owo(self, ctx: commands.Context):
+        '''OwO command'''
         await ctx.send(f"/me OωO @{ctx.author.name}")
