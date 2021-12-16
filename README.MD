@@ -68,6 +68,10 @@ Feel free to open an Issue for new features, unexpected behaviors or anything el
 
 If you don't want to open an Issue, you can DM me on Discord [Scla#1877](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
 
+# Known Issues
+- `!skin` makes the bot unresponsive to further commands. This will be solved as soon as multithreading is introduced.
+- Quite slow upload speed. This does not depend on me, sorry guys
+
 # Contributions
 We are very open to contribution and constructive criticism!
 
@@ -88,3 +92,4 @@ If you want to contribute to this project in any way, make a fork and make a pul
 - Add mikuia-like functionality
 - Threads for skin command
 - Modular commands
+
