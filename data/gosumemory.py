@@ -35,7 +35,6 @@ class Gosumemory:
 
         except requests.exceptions.ConnectionError:
             # error handling, can't connect to gosumemory
-            Outputs.print_error("Could not connect to gosumemory socket!")
             return None
 
     # TODO refactor and move mega stuff to a method

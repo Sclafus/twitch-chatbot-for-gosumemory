@@ -44,6 +44,7 @@ class Bot(commands.Bot):
         if metadata:
             await ctx.send(f'{self.outputs.string_map(metadata=metadata)}')
         else:
+            Outputs.print_error("Could not connect to gosumemory socket!")
             await ctx.send('Could not connect to gosumemory, sorry!')
 
     @commands.command()
@@ -53,6 +54,7 @@ class Bot(commands.Bot):
         if skin:
             await ctx.send(f"{skin['skin']} {skin['url']}")
         else:
+            Outputs.print_error("Could not connect to gosumemory socket!")
             await ctx.send('Could not connect to gosumemory, sorry!')
 
     @commands.command()
