@@ -1,8 +1,8 @@
 '''Bot module'''
 from twitchio.ext import commands
 
-# pylint: disable=import-error
-from osu_specific import Osu
+# pylint: disable=import-error, no-name-in-module
+from bot.osu_specific import Osu
 from outputs.outputs import Outputs
 from data.gosumemory import gosumemory
 
