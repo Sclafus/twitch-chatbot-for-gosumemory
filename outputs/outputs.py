@@ -1,4 +1,6 @@
-from .colors import colors
+'''Output handler module'''
+from outputs.colors import colors
+
 
 class Outputs():
     '''output class, used to display some text in the terminal'''
@@ -6,7 +8,8 @@ class Outputs():
     @staticmethod
     def print_message(author: str, message: str) -> None:
         '''prints a chat message to the terminal with colors'''
-        print(f"{colors['LIGHT_PURPLE']}{author}: {colors['NOCOLOR']}{message}")
+        print(
+            f"{colors['LIGHT_PURPLE']}{author}: {colors['NOCOLOR']}{message}")
 
     @staticmethod
     def print_info(to_be_printed: str) -> None:

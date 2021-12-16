@@ -15,6 +15,7 @@ from .config import Config
 
 
 class Gosumemory:
+    '''Gosumemory class, used to get data from the gosumemory api'''
 
     def __init__(self):
         ''' Class constructor, loads the config file. '''
@@ -37,7 +38,7 @@ class Gosumemory:
             Outputs.print_error("Could not connect to gosumemory socket!")
             return None
 
-    #TODO refactor and move mega stuff to a method
+    # TODO refactor and move mega stuff to a method
     def get_skin_url(self) -> str:
         '''
             Returns the current skin url from mega.
@@ -59,11 +60,11 @@ class Gosumemory:
 
         # check if the json file exists
         if not exists(join(abspath(getcwd()), 'skins.json')):
-            with open('skins.json', 'w') as json_file:
+            with open('skins.json', 'w', encoding='utf-8') as json_file:
                 json_file.write("{}")
 
         skins_dict = {}
-        with open('skins.json', 'r') as json_file:
+        with open('skins.json', 'r', encoding='utf-8') as json_file:
             skins_dict = load(json_file)
             skin_url = skins_dict.get(skin_name)
             if skin_url:
@@ -86,10 +87,11 @@ class Gosumemory:
 
         # can't find the specified mega folder, creating it
         if not mega_folder:
-            Outputs.print_warning("Can't find the specified folder on mega, creating a new one")
+            Outputs.print_warning(
+                "Can't find the specified folder on mega, creating a new one")
             mega_folder = mega_connection.create_folder(
                 mega_credentials['MEGA_FOLDER'])
-            return "please run the command again to get the URL!"
+            return "Please run the command again to get the URL!"
 
         # the skin is not on mega
         if not mega_file:
@@ -113,7 +115,7 @@ class Gosumemory:
 
             # dumping the url to the json file
             skins_dict[skin_name] = skin_url_short
-            with open('skins.json', 'w') as json_file:
+            with open('skins.json', 'w', encoding='utf-8') as json_file:
                 dump(skins_dict, json_file, indent=4)
 
             return skin_url_short
@@ -127,7 +129,7 @@ class Gosumemory:
         skins_dict[skin_name] = skin_url_short
 
         # dumping the url to the json file
-        with open('skins.json', 'w') as json_file:
+        with open('skins.json', 'w', encoding='utf-8') as json_file:
             dump(skins_dict, json_file, indent=4)
 
         return skin_url_short

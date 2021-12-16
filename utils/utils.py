@@ -64,12 +64,12 @@ def get_map_infos(url: str):
 
     # finding top diff
     diff = max([{'name': diff_data['version'],
-              'stars': diff_data['difficulty_rating'],
-              'id': diff_data['id'],
-              'bpm': diff_data['bpm'],
-              'ar': diff_data['ar'],
-              'cs': diff_data['cs']
-        } for diff_data in json_data['beatmaps']], key=lambda x: x['stars'])
+                 'stars': diff_data['difficulty_rating'],
+                 'id': diff_data['id'],
+                 'bpm': diff_data['bpm'],
+                 'ar': diff_data['ar'],
+                 'cs': diff_data['cs']
+                 } for diff_data in json_data['beatmaps']], key=lambda x: x['stars'])
 
     return {
         'artist': json_data['artist'],
