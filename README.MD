@@ -3,7 +3,6 @@
 
 A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.com/l3lackShark/gosumemory)!
 
-# Big refactoring going on! The bot might not work until i'm done!
 # Features
 `!np` responds in chat with the currently playing map and a URL for the download link
 
@@ -80,8 +79,12 @@ If you want to contribute to this project in any way, make a fork and make a pul
 
 # Todos sorted by priority
 - ~~Switch to twitchio 2.0~~
-- Modular commands
+- ~~Improve build workflows~~
+- Refactoring
 - Handle missing MEGA_FOLDER (defaulting to root folder)
-- Improve build workflows
 - Add password protect mode (encrypts all the sensibile informations)
+- Setup mode to create config file
+- Improve instructions and make a video for setup
 - Add mikuia-like functionality
+- Threads for skin command
+- Modular commands
