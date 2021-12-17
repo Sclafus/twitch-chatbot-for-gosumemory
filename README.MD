@@ -10,27 +10,9 @@ A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.c
 
 `!owo` oωo
 # Installation
-- Download the [latest release](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/releases/latest) for your operating system (Windows builds are UNTESTED, keep that in mind)
 
-- Follow [Step 2](#step-2-create-a-new-twitch-app) and [Step 3](#step-3-create-config)
-
-- Open your executable and enjoy
-# Development Installation
-As of today, `twitchio` has been forced to version 1.2.3 in `requirements.txt`. This is needed since `twitchio` version 2.0 is now out and I don't really have time to port the existing version to the new version at the moment. `twitchio` 2.0 fixes the error with `websockets>=9.0`. I will fix everything soon™️. ETA: Decemeber 2021 (quite busy at the moment sorry lads).
-## Step 1: clone the repository, install python and dependencies 
-- Install [Python](https://www.python.org/) and add it to PATH
-
-- Clone the repository - [Download zip](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/archive/refs/heads/senpai.zip)
-
-- Open a terminal and type:
-```bash 
-pip install -r requirements.txt
-```
-or 
-```bash
-pip3 install -r requirements.txt
-```
-to install the required libraries
+## Step 1: download
+- Download the [latest release](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/releases/latest) for your operating system (Windows builds are tested under Wine, keep that in mind)
 
 ## Step 2: create a new twitch app
 - Login on [Twitch Developers](https://dev.twitch.tv/)
@@ -58,19 +40,38 @@ MEGA_PASSWORD = yourpassword                   # not very secure, I know...
                                                # also 2FA is not supported
 MEGA_FOLDER = folder/subfolder
 ```
-
 ## Step 4: play more
+- Open your executable and enjoy
+
+# Development Installation
+
+## Step 1
+- Follow [Step 2](#step-2-create-a-new-twitch-app) and [step 3](#step-3-create-config)
+## Step 2: clone the repository, install python and dependencies 
+- Install [Python](https://www.python.org/) and add it to PATH
+
+- Clone the repository - [Download zip](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/archive/refs/heads/senpai.zip)
+
+- Open a terminal and type:
+```bash 
+pip install -r requirements.txt
+```
+to install the required libraries
+
+
+## Step 3: play more
 - Execute `python twitch_chatbot.py` in the terminal or simply double click it
-
-# Bug Reports
-
-Feel free to open an Issue for new features, unexpected behaviors or anything else really!
-
-If you don't want to open an Issue, you can DM me on Discord [Scla#1877](https://discordapp.com/users/108501885849202688), but please use issues since it's way more organized than my Discord DMs lol
 
 # Known Issues
 - `!skin` makes the bot unresponsive to further commands. This will be solved as soon as multithreading is introduced.
 - Quite slow upload speed. This does not depend on me, sorry guys
+
+# Bug Reports
+
+Feel free to open an issue here on Github for new features, unexpected behaviors or anything else really!
+
+You can also report them on the project [discord](https://discord.gg/YMr8WCAsDr).
+
 
 # Contributions
 We are very open to contribution and constructive criticism!
@@ -85,6 +86,7 @@ If you want to contribute to this project in any way, make a fork and make a pul
 - ~~Switch to twitchio 2.0~~
 - ~~Improve build workflows~~
 - Refactoring
+- Auto upload for unsubmitted maps
 - Handle missing MEGA_FOLDER (defaulting to root folder)
 - Add password protect mode (encrypts all the sensibile informations)
 - Setup mode to create config file
