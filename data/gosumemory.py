@@ -4,13 +4,13 @@ Helper module to get data from gosumemory, mega and from the config file
 
 from os.path import join, abspath, exists
 from os import pardir, getcwd, remove
-from json import load, dump
+from json import load
 
 import requests
 from file_sharing.mega_handler import MegaHandler
 
 from outputs.outputs import Outputs
-from utils.utils import zip_skin, tinyurl_shortener
+from utils.utils import zip_skin, tinyurl_shortener, add_element_to_json_file
 from .config import Config
 
 
@@ -60,20 +60,7 @@ class Gosumemory:
                 return value
         return None
 
-    def add_element_to_json_file(
-        self, filename: str, key: str, value, encoding: str = "utf-8"
-    ):
-        """add specified key value pair to json file"""
-        if not exists(join(abspath(getcwd()), filename)):
-            return
 
-        _dict = {}
-        with open(filename, "r", encoding=encoding) as json_file:
-            _dict = load(json_file)
-
-        _dict[key] = value
-        with open(filename, "w", encoding=encoding) as json_file:
-            dump(_dict, json_file, indent=4)
 
     def get_skin_url(self, skin_name: str, auto_upload: bool = False) -> str:
         """
@@ -123,7 +110,9 @@ class Gosumemory:
         # skin is already on mega
         if skin_file_mega:
             Outputs.print_info("The skin is already on mega!")
-            return tinyurl_shortener(mega.get_link(skin_file_mega))
+            skin_url_short = tinyurl_shortener(mega.get_link(skin_file_mega))
+            add_element_to_json_file("skins.json", skin_name, skin_url_short)
+            return skin_url_short
 
         # the skin is not on mega
 
@@ -143,7 +132,7 @@ class Gosumemory:
 
         # shortening
         skin_url_short = tinyurl_shortener(skin_url)
-        self.add_element_to_json_file("skins.json", skin_name, skin_url_short)
+        add_element_to_json_file("skins.json", skin_name, skin_url_short)
 
         # dumping the url to the json file
         return skin_url_short

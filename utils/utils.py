@@ -5,6 +5,7 @@ Init module for colors and config handler
 import os
 import json
 from zipfile import ZipFile
+from json import load, dump
 
 from requests import get
 from bs4 import BeautifulSoup
@@ -81,3 +82,17 @@ def get_map_infos(url: str):
     )
 
     return {"artist": json_data["artist"], "title": json_data["title"], "diff": diff}
+
+
+def add_element_to_json_file(filename: str, key: str, value, encoding: str = "utf-8"):
+    """add specified key value pair to json file"""
+    if not os.path.exists(os.path.join(os.path.abspath(os.getcwd()), filename)):
+        return
+
+    _dict = {}
+    with open(filename, "r", encoding=encoding) as json_file:
+        _dict = load(json_file)
+
+    _dict[key] = value
+    with open(filename, "w", encoding=encoding) as json_file:
+        dump(_dict, json_file, indent=4)
