@@ -96,3 +96,26 @@ def add_element_to_json_file(filename: str, key: str, value, encoding: str = "ut
     _dict[key] = value
     with open(filename, "w", encoding=encoding) as json_file:
         dump(_dict, json_file, indent=4)
+
+
+def create_empty_json_file(filename: str, encoding: str = "utf-8"):
+    """Creates an empty json file in the current working directory"""
+    if os.path.exists(os.path.join(os.path.abspath(os.getcwd()), filename)):
+        return
+
+    with open(filename, "w", encoding=encoding) as json_file:
+        json_file.write("{}")
+
+
+def search_json_file(filename: str, key, encoding: str = "utf-8"):
+    """Searches the value for the specified key"""
+
+    if not os.path.exists(os.path.join(os.path.abspath(os.getcwd()), filename)):
+        create_empty_json_file(filename)
+
+    with open(filename, "r", encoding=encoding) as json_file:
+        _dict = load(json_file)
+        value = _dict.get(key)
+        if value:
+            return value
+    return None

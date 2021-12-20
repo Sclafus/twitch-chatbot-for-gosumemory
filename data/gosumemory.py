@@ -2,15 +2,14 @@
 Helper module to get data from gosumemory, mega and from the config file
 """
 
-from os.path import join, abspath, exists
-from os import pardir, getcwd, remove
-from json import load
+from os.path import join
+from os import pardir, remove
 
 import requests
 from file_sharing.mega_handler import MegaHandler
 
 from outputs.outputs import Outputs
-from utils.utils import zip_skin, tinyurl_shortener, add_element_to_json_file
+from utils.utils import zip_skin, tinyurl_shortener, add_element_to_json_file, create_empty_json_file, search_json_file
 from .config import Config
 
 
@@ -37,31 +36,6 @@ class Gosumemory:
             # error handling, can't connect to gosumemory
             return None
 
-    # TODO move json stuff to utils
-    @staticmethod
-    def create_empty_json_file(filename: str, encoding: str = "utf-8"):
-        """Creates an empty json file in the current working directory"""
-        if exists(join(abspath(getcwd()), filename)):
-            return
-
-        with open(filename, "w", encoding=encoding) as json_file:
-            json_file.write("{}")
-
-    def search_json_file(self, filename: str, key, encoding: str = "utf-8"):
-        """Searches the value for the specified key"""
-
-        if not exists(join(abspath(getcwd()), filename)):
-            self.create_empty_json_file(filename)
-
-        with open(filename, "r", encoding=encoding) as json_file:
-            _dict = load(json_file)
-            value = _dict.get(key)
-            if value:
-                return value
-        return None
-
-
-
     def get_skin_url(self, skin_name: str, auto_upload: bool = False) -> str:
         """
         Returns the current skin url from mega.
@@ -83,10 +57,10 @@ class Gosumemory:
         )
 
         # creating empty json for skins only if necessary
-        self.create_empty_json_file("skins.json")
+        create_empty_json_file("skins.json")
 
         # if the url is already present in skins.json, return it
-        if skin_url := self.search_json_file("skins.json", key=skin_name):
+        if skin_url := search_json_file("skins.json", key=skin_name):
             return skin_url
 
         # url not in json, auto upload disabled, return
