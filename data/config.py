@@ -36,6 +36,10 @@ class Config:
             "CHANNEL": self.CHANNEL,
         }
 
+    def get_gosumemory_url(self) -> dict:
+        """Returns the gosumemory url"""
+        return self.GOSUMEMORY_JSON
+
     def is_config_usable(self) -> bool:
         """Checks if values are valid"""
         return self.is_twitch_config_valid() and self.GOSUMEMORY_JSON is not None
