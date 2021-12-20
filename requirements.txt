@@ -1,7 +1,7 @@
 requests>=2.25.1
-twitchio==1.2.3
+twitchio==2.0.6
 python-dotenv>=0.15.0
 colorama>=0.4.3
-mega.py>=1.0.8
-beautifulsoup4>=4.9.3
-websockets==8.1
+mega.py==1.0.8
+beautifulsoup4==4.10.0
+websockets==10.0
