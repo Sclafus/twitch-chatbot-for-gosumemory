@@ -9,7 +9,7 @@ import requests
 from file_sharing.mega_handler import MegaHandler
 
 from outputs.outputs import Outputs
-from utils.utils import zip_skin, tinyurl_shortener, add_element_to_json_file, create_empty_json_file, search_json_file
+import utils.utils as ut
 from .config import Config
 
 
@@ -57,10 +57,10 @@ class Gosumemory:
         )
 
         # creating empty json for skins only if necessary
-        create_empty_json_file("skins.json")
+        ut.create_empty_json_file("skins.json")
 
         # if the url is already present in skins.json, return it
-        if skin_url := search_json_file("skins.json", key=skin_name):
+        if skin_url := ut.search_json_file("skins.json", key=skin_name):
             return skin_url
 
         # url not in json, auto upload disabled, return
@@ -71,28 +71,28 @@ class Gosumemory:
 
         # logging into mega account
         mega = MegaHandler(
-            mega_credentials["MEGA_EMAIL"], mega_credentials["MEGA_PASSWORD"]
+            mega_credentials.email, mega_credentials.password
         )
         skin_file_mega = mega.find(f"{skin_name}.osk")
 
-        skin_mega_folder = mega.find(f"{mega_credentials['MEGA_FOLDER']}/Skins")
+        skin_mega_folder = mega.find(f"{mega_credentials.folder}/Skins")
 
         # can't find the specified mega folder, creating it
         if not skin_mega_folder:
-            mega.create_folder(f'{mega_credentials["MEGA_FOLDER"]}/Skins')
+            mega.create_folder(f'{mega_credentials.folder}/Skins')
 
         # skin is already on mega
         if skin_file_mega:
             Outputs.print_info("The skin is already on mega!")
-            skin_url_short = tinyurl_shortener(mega.get_link(skin_file_mega))
-            add_element_to_json_file("skins.json", skin_name, skin_url_short)
+            skin_url_short = ut.tinyurl_shortener(mega.get_link(skin_file_mega))
+            ut.add_element_to_json_file("skins.json", skin_name, skin_url_short)
             return skin_url_short
 
         # the skin is not on mega
 
         # zipping the skin folder as skin_name.osk
         Outputs.print_info("Zipping your current skin")
-        zip_skin(skin_name, skin_folder_path)
+        ut.zip_skin(skin_name, skin_folder_path)
 
         # uploading skin_name.osk to mega
         Outputs.print_info("Uploading your current skin")
@@ -105,8 +105,8 @@ class Gosumemory:
         remove(f"{skin_name}.osk")
 
         # shortening
-        skin_url_short = tinyurl_shortener(skin_url)
-        add_element_to_json_file("skins.json", skin_name, skin_url_short)
+        skin_url_short = ut.tinyurl_shortener(skin_url)
+        ut.add_element_to_json_file("skins.json", skin_name, skin_url_short)
 
         # dumping the url to the json file
         return skin_url_short
@@ -116,7 +116,7 @@ class Gosumemory:
 
         api_data = self.get_gosumemory_data()
         if not api_data:
-            return None
+            return {}
 
         skin_name = api_data["settings"]["folders"]["skin"]
         skin_url = (
@@ -136,7 +136,7 @@ class Gosumemory:
 
         # creating download link
 
-        beatmap_metadata = api_data["menu"]["bm"]["metadata"]
+        beatmap_metadata: dict = api_data["menu"]["bm"]["metadata"]
         return {
             "url": f"https://osu.ppy.sh/b/{api_data['menu']['bm']['id']}",
             "title": beatmap_metadata["title"],
