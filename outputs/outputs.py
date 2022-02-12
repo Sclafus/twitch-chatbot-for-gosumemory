@@ -1,5 +1,5 @@
 '''Output handler module'''
-from outputs.colors import colors
+from outputs.colors import Color
 
 
 class Outputs():
@@ -9,27 +9,28 @@ class Outputs():
     def print_message(author: str, message: str) -> None:
         '''prints a chat message to the terminal with colors'''
         print(
-            f"{colors['LIGHT_PURPLE']}{author}: {colors['NOCOLOR']}{message}")
+            f"{Color.LIGHT_PURPLE.value}{author}: {Color.NOCOLOR.value}{message}")
 
     @staticmethod
     def print_info(to_be_printed: str) -> None:
         '''prints a info message to the terminal with colors'''
-        print(f"{colors['CYAN']}{to_be_printed}{colors['NOCOLOR']}")
+        print(f"{Color.CYAN.value}{to_be_printed}{Color.NOCOLOR.value}")
 
     @staticmethod
     def print_error(error: str) -> None:
         '''prints an error message to the terminal with colors'''
-        print(f"{colors['RED']}{error}{colors['NOCOLOR']}")
+        print(f"{Color.RED.value}{error}{Color.NOCOLOR.value}")
 
     @staticmethod
     def print_warning(warning: str) -> None:
         '''prints an error message to the terminal with colors'''
-        print(f"{colors['YELLOW']}{warning}{colors['NOCOLOR']}")
+        print(f"{Color.YELLOW.value}{warning}{Color.NOCOLOR.value}")
 
     @staticmethod
     def print_map_request(author: str, message: str) -> None:
         '''prints an osu map request to the terminal with colors'''
         # TODO
+        return
 
     @staticmethod
     def string_map(metadata: dict) -> str:
