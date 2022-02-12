@@ -1,53 +1,76 @@
+'''Config file handler'''
 from os import environ
+from dataclasses import dataclass, fields
 from dotenv import load_dotenv
 
 
+@dataclass
+class MegaConfig:
+    '''Mega config class, stores the credentials for mega'''
+
+    email: str
+    password: str
+    folder: str
+
+
+@dataclass
+class TwitchConfig:
+    '''Twitch config class, stores the credentials for twitch'''
+
+    tmi_token: str
+    client_id: str
+    bot_nick: str
+    bot_prefix: str
+    channel: str
+
+
 class Config:
+    '''Config class'''
+
     def __init__(self, filename: str = "config.txt"):
         load_dotenv(filename)
+        self.twitch_config = TwitchConfig(
+            tmi_token=environ.get("TMI_TOKEN"),
+            client_id=environ.get("CLIENT_ID"),
+            bot_nick=environ.get("BOT_NICK"),
+            bot_prefix=environ.get("BOT_PREFIX"),
+            channel=environ.get("CHANNEL"),
+        )
 
-        self.TMI_TOKEN = environ.get("TMI_TOKEN")
-        self.CLIENT_ID = environ.get("CLIENT_ID")
-        self.BOT_NICK = environ.get("BOT_NICK")
-        self.BOT_PREFIX = environ.get("BOT_PREFIX")
-        self.CHANNEL = environ.get("CHANNEL")
-        self.GOSUMEMORY_JSON = environ.get("GOSUMEMORY_JSON_URL")
-        self.MEGA_EMAIL = environ.get("MEGA_EMAIL")
-        self.MEGA_PASSWORD = environ.get("MEGA_PASSWORD")
-        self.MEGA_FOLDER = environ.get("MEGA_FOLDER")
+        self.mega_config = MegaConfig(
+            email=environ.get("MEGA_EMAIL"),
+            password=environ.get("MEGA_PASSWORD"),
+            folder=environ.get("MEGA_FOLDER"),
+        )
 
-    def get_mega_data(self) -> dict:
+        self.gosumemory_json = environ.get("GOSUMEMORY_JSON_URL")
+
+    def get_mega_data(self) -> MegaConfig:
         """Returns mega config data."""
+        return self.mega_config
 
-        return {
-            "MEGA_EMAIL": self.MEGA_EMAIL,
-            "MEGA_PASSWORD": self.MEGA_PASSWORD,
-            "MEGA_FOLDER": self.MEGA_FOLDER,
-        }
-
-    def get_twitch_data(self) -> dict:
+    def get_twitch_data(self) -> TwitchConfig:
         """Returns twitch config data."""
+        return self.twitch_config
 
-        return {
-            "TMI_TOKEN": self.TMI_TOKEN,
-            "CLIENT_ID": self.CLIENT_ID,
-            "BOT_NICK": self.BOT_NICK,
-            "BOT_PREFIX": self.BOT_PREFIX,
-            "CHANNEL": self.CHANNEL,
-        }
-
-    def get_gosumemory_url(self) -> dict:
+    def get_gosumemory_url(self) -> str:
         """Returns the gosumemory url"""
-        return self.GOSUMEMORY_JSON
+        return self.gosumemory_json
 
     def is_config_usable(self) -> bool:
         """Checks if values are valid"""
-        return self.is_twitch_config_valid() and self.GOSUMEMORY_JSON is not None
+        return self.is_twitch_config_valid() and self.gosumemory_json is not None
 
     def is_twitch_config_valid(self) -> bool:
         """Checks if the twitch values are valid"""
-        return all(value is not None for value in self.get_twitch_data().values())
+        return all(
+            getattr(self.get_twitch_data(), value.name) is not None
+            for value in fields(self.get_twitch_data())
+        )
 
     def is_mega_config_valid(self) -> bool:
         """Checks if the mega values are valid"""
-        return all(value is not None for value in self.get_mega_data().values())
+        return all(
+            getattr(self.get_mega_data(), value.name) is not None
+            for value in fields(self.get_mega_data())
+        )

@@ -11,18 +11,19 @@ if __name__ == "__main__":
     config = Config()
 
     if not config.is_config_usable():
-        Outputs().print_error("The config file is missing.")
+        Outputs.print_error("Missing twitch information, exiting...")
         sys.exit(1)
 
     if not config.is_mega_config_valid():
-        Outputs().print_info(
-            "Mega config is missing or invalid."
+        Outputs.print_warning(
+            'Mega config is missing or invalid.\n'
+            'You will not be able to upload automatically your skins.'
         )
 
     twitch_data = config.get_twitch_data()
     bot = Bot(
-        access_token=twitch_data["TMI_TOKEN"],
-        prefix=twitch_data["BOT_PREFIX"],
-        channels=[twitch_data["CHANNEL"]],
+        access_token=twitch_data.tmi_token,
+        prefix=twitch_data.bot_prefix,
+        channels=[twitch_data.channel],
     )
     bot.run()
