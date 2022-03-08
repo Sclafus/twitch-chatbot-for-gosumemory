@@ -1,0 +1,43 @@
+[tool.briefcase]
+project_name = "Twitch Chatbot for GosuMemory"
+bundle = "Sclafus/com.github"
+version = "1.0"
+url = "https://github.com/Sclafus/twitch_chatbot_for_gosumemory"
+license = "GNU General Public License v3 (GPLv3)"
+author = 'Sclafus'
+author_email = "sclafus@example.com"
+
+[tool.briefcase.app.twitch_chatbot_for_gosumemory]
+formal_name = "Twitch Chatbot for GosuMemory"
+description = "Osu chatbot"
+# icon = "./resources/icon.jpg"
+sources = ['twitch_chatbot_for_gosumemory']
+requires = [
+    'requests',
+    'twitchio',
+    'python-dotenv',
+    'colorama',
+    'mega.py',
+    # 'beautifulsoup4',
+    'websockets'
+]
+
+
+[tool.briefcase.app.twitch_chatbot_for_gosumemory.macOS]
+requires = [
+    'std-nslog==1.0.0'
+]
+
+[tool.briefcase.app.twitch_chatbot_for_gosumemory.linux]
+requires = []
+system_requires = []
+
+[tool.briefcase.app.twitch_chatbot_for_gosumemory.windows]
+requires = []
+
+# Mobile deployments
+[tool.briefcase.app.twitch_chatbot_for_gosumemory.iOS]
+supported = false
+
+[tool.briefcase.app.twitch_chatbot_for_gosumemory.android]
+supported = false

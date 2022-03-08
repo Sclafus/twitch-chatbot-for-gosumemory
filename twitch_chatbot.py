@@ -7,7 +7,8 @@ from bot.bot import Bot
 from data.config import Config
 from outputs.outputs import Outputs
 
-if __name__ == "__main__":
+
+def main():
     config = Config()
 
     if not config.is_config_usable():
@@ -27,3 +28,7 @@ if __name__ == "__main__":
         channels=[twitch_data.channel],
     )
     bot.run()
+
+
+if __name__ == "__main__":
+    main()
