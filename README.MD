@@ -47,13 +47,13 @@ MEGA_FOLDER = folder/subfolder
 
 ## Step 1
 - Follow [Step 2](#step-2-create-a-new-twitch-app) and [step 3](#step-3-create-config)
-## Step 2: clone the repository, install python and dependencies 
+## Step 2: clone the repository, install python and dependencies
 - Install [Python](https://www.python.org/) and add it to PATH
 
 - Clone the repository - [Download zip](https://github.com/Sclafus/twitch-chatbot-for-gosumemory/archive/refs/heads/senpai.zip)
 
 - Open a terminal and type:
-```bash 
+```bash
 pip install -r requirements.txt
 ```
 to install the required libraries
@@ -85,13 +85,11 @@ If you want to contribute to this project in any way, make a fork and make a pul
 # Todos sorted by priority
 - ~~Switch to twitchio 2.0~~
 - ~~Improve build workflows~~
-- Refactoring
+- Setup mode to create config file
+- IRC support for map requests (in-game message with the map)
+- Migration to [Beeware Briefcase](https://github.com/beeware/briefcase) for distribution
+
 - Auto upload for unsubmitted maps
 - Handle missing MEGA_FOLDER (defaulting to root folder)
 - Add password protect mode (encrypts all the sensibile informations)
-- Setup mode to create config file
-- Improve instructions and make a video for setup
-- Add mikuia-like functionality
-- Threads for skin command
 - Modular commands
-
