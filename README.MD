@@ -1,6 +1,8 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory/badge)](https://www.codefactor.io/repository/github/sclafus/twitch-chatbot-for-gosumemory)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Sclafus/twitch-chatbot-for-gosumemory/Pylint?style=flat)
 
+
+# THIS PROJECT IS NO LONGER MANTAINED. PLEASE USE [MIRAYA](https://github.com/MirayaProject/miraya)
 A basic and lightweight Twitch chatbot to use with [gosumemory](https://github.com/l3lackShark/gosumemory)!
 
 # Features
